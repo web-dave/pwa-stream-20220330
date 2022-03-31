@@ -1,0 +1,16 @@
+{
+  "name": "stream-PWA",
+  "short_name": "PWA",
+  "theme_color": "#0d4c73",
+  "background_color": "#789789",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "500x500"
+    }
+  ]
+}

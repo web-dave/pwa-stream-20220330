@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>PWA</title>
+  </head>
+  <body>
+    <img src="./Space.png" alt="cat in space" />
+
+    <script>
+      const vapid = {
+        subject: "mailto: <cyöfxlkgjdsfgklsdj@öxlfkjdfäglj.de>",
+        publicKey:
+          "BJjQ9f6yf3VXgCh7TNlvXUqLD57zoOx6pTDVfZ7L6feyHLFGj07dqtXa89A5wZOYsQqvgGSZyHmDlo57LIHoxUI",
+        privateKey: "ZuYeGkvBj0dIPYqFGt4-etBswYvhc4wbIqa7W3fw_Cc",
+      };
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then((data) => {
+          data.pushManager
+            .subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: urlB64ToUint8Array(vapid.publicKey),
+            })
+            .then((pushSubscription) =>
+              console.log("pushSub", pushSubscription.toJSON())
+            );
+        })
+        .catch((err) => console.error(err));
+
+      fetch("https://swapi.dev/api/starships/10")
+        .then((data) => data.json())
+        .then((data) => console.log(data));
+
+      function urlB64ToUint8Array(base64String) {
+        const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+        const base64 = (base64String + padding)
+          .replace(/\-/g, "+")
+          .replace(/_/g, "/");
+
+        const rawData = window.atob(base64);
+        const outputArray = new Uint8Array(rawData.length);
+
+        for (let i = 0; i < rawData.length; ++i) {
+          outputArray[i] = rawData.charCodeAt(i);
+        }
+        return outputArray;
+      }
+    </script>
+  </body>
+</html>
